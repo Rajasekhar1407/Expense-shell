@@ -14,6 +14,6 @@ cd /usr/share/ngix/html
 
 unzip /tmp/frontend.zip
 
-cp C:\devops\repos\expense-shell\expense.conf /etc/nginx/default.d/expense.conf
+cp /home/ec2-user/expense-shell/expense.conf /etc/nginx/default.d/expense.conf
 
 systemctl restart nginx
