@@ -59,16 +59,16 @@ VALIDATE $? "Extracting backend code"
 npm install &>>$LOGFILE
 VALIDATE $? "Installing nodejs Dependencies"
 
-cp C:\devops\repos\expense-shell\backend.service /etc/systemd/system/backend.service
+cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service &>>$LOGFILE
 VALIDATE $? "Copieing backend service"
 
-systemctl demon-reload 
+systemctl demon-reload &>>$LOGFILE
 VALIDATE $? "Demon Reload"
 
-systemctl start backend
+systemctl start backend &>>$LOGFILE
 VALIDATE $? "Starting backend service"
 
-systemctl enable backend
+systemctl enable backend &>>$LOGFILE
 VALIDATE $? "Enabling backend service"
 
 dnf install mysql -y &>>$LOGFILE
@@ -80,5 +80,5 @@ read -s mysql_root_password
 mysql -h db.rajasekhar.online -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
 VALIDATE $? "Schema Loading"
 
-systemctl restart backend
+systemctl restart backend &>>$LOGFILE
 VALIDATE $? "Restarting backend service"
