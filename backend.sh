@@ -19,7 +19,7 @@ else
 fi
 
 VALIDATE() {
-    if [$1 -ne 0]
+    if [$? -ne 0]
     then
         echo -e "$R $2...FAILED $N"
     else
