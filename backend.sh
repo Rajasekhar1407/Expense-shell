@@ -2,7 +2,7 @@
 
 USERID=$(id -u)
 TIMESTAMP=$(date +%F-%H-%M-%S)
-SCRIPT_NAME=$($0 | cut -d "." -f1)
+SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOGFILE=/tmp/$SCRIPT_NAME-$TIMESTAMP.log
 
 R="\e[31m"
@@ -48,21 +48,21 @@ fi
 mkdir -p /app 
 VALIDATE $? "Creating app directory"
 
-curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOGFILE
 VALIDATE $? "Downloading backend code"
 
 cd /app
 rm -rf /app/*
-unzip /tmp/backend.zip
+unzip /tmp/backend.zip &>>$LOGFILE
 VALIDATE $? "Extracting backend code"
 
-npm install
+npm install &>>$LOGFILE
 VALIDATE $? "Installing nodejs Dependencies"
 
 cp C:\devops\repos\expense-shell\backend.service /etc/systemd/system/backend.service
 VALIDATE $? "Copieing backend service"
 
-systemctl demon-reload
+systemctl demon-reload 
 VALIDATE $? "Demon Reload"
 
 systemctl start backend
@@ -71,13 +71,13 @@ VALIDATE $? "Starting backend service"
 systemctl enable backend
 VALIDATE $? "Enabling backend service"
 
-dnf install mysql -y
+dnf install mysql -y &>>$LOGFILE
 VALIDATE $? "Installing MySQL Client"
 
 echo "Please enter DB password"
 read -s mysql_root_password
 
-mysql -h db.rajasekhar.online -uroot -p${mysql_root_password} < /app/schema/backend.sql
+mysql -h db.rajasekhar.online -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
 VALIDATE $? "Schema Loading"
 
 systemctl restart backend
