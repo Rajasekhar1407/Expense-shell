@@ -42,7 +42,7 @@ VALIDATE $? "Removing default content"
 curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$LOGFILE
 VALIDATE $? "Downloading frontend code"
 
-cd /usr/share/ngix/html
+cd /usr/share/nginx/html
 unzip /tmp/frontend.zip &>>$LOGFILE
 VALIDATE $? "Extracting Frontend code"
 
