@@ -19,7 +19,7 @@ else
 fi
 
 VALIDATE() {
-    if [$? -ne 0]
+    if [ $? -ne 0 ]
     then
         echo -e "$R $2...FAILED $N"
     else
@@ -37,7 +37,7 @@ dnf install nodejs -y &>>$LOGFILE
 VALIDATE $? "Installing nodejs"
 
 id expense &>>$LOGFILE
-if [$? -ne 0]
+if [ $? -ne 0 ]
 then
     useradd expense
     VALIDATE $? "Creating Expense user"
