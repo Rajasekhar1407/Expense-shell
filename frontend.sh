@@ -1,3 +1,5 @@
+echo "Test"
+
 dnf install nginx -y
 
 systemctl enable nginx
